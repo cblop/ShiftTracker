@@ -8,10 +8,15 @@ Ext.application({
     name: 'shiftTracker',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Ext.data.identifier.Uuid'
     ],
 
-    views: ['Main'],
+    models: ["Shift"],
+    stores: ["Shifts"],
+    controllers: ["Shifts"],
+
+    views: ["ShiftList", "ShiftEditor"],
 
     icon: {
         57: 'resources/icons/Icon.png',
@@ -24,11 +29,20 @@ Ext.application({
     tabletStartupScreen: 'resources/loading/Homescreen~ipad.jpg',
 
     launch: function() {
+
+        var shiftListView = {
+            xtype: "shiftlistview"
+        };
+
+        var shiftEditorView = {
+            xtype: "shifteditorview"
+        };
+
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('shiftTracker.view.Main'));
+        Ext.Viewport.add(Ext.create('shiftTracker.view.ShiftList'));
     },
 
     onUpdated: function() {
